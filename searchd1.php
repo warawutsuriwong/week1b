@@ -1,5 +1,5 @@
 <?php
-
+// รับค่ามาแปลงเป็นออบเจ็ค รูปแบบที่เอามาทำงานได้
 $objJSON = json_decode($_POST["json"]);
 
 $typeQuery = $objJSON->{'type'};
@@ -7,38 +7,20 @@ $typeQuery = $objJSON->{'type'};
 
 $sea = "";
 $id = null;
-// เตรียมค่ามาใส่ตัวแปร
+// รับค่ามาใส่ตัวแปรตามเงื่อนไข พิมหา,กด+
 if ($typeQuery == 'search-input') {
     $sea = $objJSON->{'name'};
 } else if ($typeQuery == 'more-button') {
     $id =  $objJSON->{'id'};
 }
 
-// $sea = $_POST['json'];
-// $typeQuery = $_POST['type'];
-// $sea=null;
-// $objJson = json_decode($_POST["json"]);
-
-// echo json_decode($_POST["json"]);
-
-// $objType = json_decode($_POST["type"]);
-// $sea = "";
-// if ($objType == 'search-input') {
-//     $sea = $objJson->{'name'};
-// } else if ($objType == 'more-button') {
-    
-// }
-
-
-
-// เชื่อมต่อDB
 $servernameDB = "localhost";
 $usernameDB = "root";
 $passwordDB = "";
 $dbnameDB = "rfs2";
-
 // $conn = mysqli_connect($servernameDB, $usernameDB, $passwordDB, $dbnameDB);
 // mysqli_set_charset($conn, 'utf8');
+
 // รูปแบการเชื่อมต่อ PDO
 try {
 
@@ -58,7 +40,7 @@ try {
 
 
 
-// เงื่อนไขเวลาหาข้อมูลมาแล้วดึงข้อมูลมา
+// เงื่อนไขเวลาหาข้อมูล แล้วดึงข้อมูลมา
 if ($typeQuery == 'search-input'){
     $stmt = $conn->prepare("
         SELECT invoice_id, company_id, company_format, invoice_number, name, organization, address, email, create_dt 
@@ -74,7 +56,7 @@ $stmt->execute();
 $dd = $stmt->fetchAll(PDO::FETCH_ASSOC);
 exit(json_encode($dd));
 
-// เงื่อนไขเวลาคลิ๊กแล้วไปดึงข้อมูลมา
+// เงื่อนไขเวลาคลิ๊ก แล้วดึงข้อมูลมา
 } else if ($typeQuery == 'more-button') {
     $stmt1 = $conn->prepare("
         SELECT invoice_item.invoice_id,invoice.name,invoice_item.item_id,invoice_item.company_id,
@@ -88,11 +70,6 @@ $stmt1->execute();
 $ss = $stmt1->fetchAll(PDO::FETCH_ASSOC);
 exit(json_encode($ss));
 }
-
-
-
-
-
 
 // $output = [];
 

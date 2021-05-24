@@ -56,15 +56,16 @@
         </tr>
       </thead>
       <div>
+      <!-- เรียกข้อมูลหลักมาแสดง -->
         <tbody id="output"></tbody>
         </tbody>
       </div>
-      <div>
+      <!-- <div>
         <br>
         <tbody id="more-table">
-        <!-- <tbody id="textHtml1"> -->
+        <tbody id="textHtml1">
         </tbody>
-      </div>
+      </div> -->
     </table>
 
     <!-- <div id="page-selection"></div> -->
@@ -94,6 +95,53 @@
 
 
   <!-- เมื่อเริ่มหา -->
+
+  <script type="text/javascript">
+
+    $(document).ready(function() {
+      $("#search").keypress(function() {
+
+        let name = $("#search").val()
+        // data["page"] = page;
+
+        // เตรียมข้อมูลไว้แปลงเป็นJSON
+        let obj = {
+          name: name,
+          type: "search-input"
+        }
+        // แปลงเป็นstring
+        var json = JSON.stringify(obj);
+        $.ajax({
+          type: 'POST',
+          url: 'searchd1.php',
+          dataType: 'json',
+          data: {
+            "json": json
+            // name: $("#search").val(),
+          },
+          success: function(data) {
+            // alert(data);
+            // console.log(data);
+            var textHtml = ""
+            data.forEach((item, index) => {
+
+              textHtml += "<tr>"
+
+              textHtml += "<td>" + item.invoice_id + "</td><td>" + item.company_id + "</td><td>" + item.company_format + "</td><td>" + item.invoice_number + "</td><td>" + item.name + "</td><td>" + item.organization + "</td><td>" + item.address + "</td><td>" + item.email + "</td><td>" + item.create_dt + "</td> <td><button id='btn' name='btn' onclick=myFunction1(" + item.invoice_id + ")> + </button></td>"
+
+              textHtml += "</tr>"
+              textHtml += "<tr id='bodyResult" + item.invoice_id + "'></tr><br>"
+
+            });
+            document.getElementById("output").innerHTML = textHtml
+            // createPagination(res.currentPage, res.page);
+          }
+        });
+      })
+    });
+  </script>
+
+<!-- เมื่อกด +  -->
   <script>
     function myFunction1(invoiceId) {
       // alert("Hello! I am an alert box!");
@@ -130,13 +178,13 @@
           textHtml1 = "<br>"
 
           data.forEach((item1) => {
-            // textHtml1 += "<table>"
+            textHtml1 += "<table>"
             textHtml1 += "<tr>"
 
             textHtml1 += "<td>" + item1.invoice_id + "</td><td>" + item1.name + "</td><td>" + item1.item_id + "</td><td>" + item1.company_id + "</td><td>" + item1.description + "</td><td>" + item1.price + "</td><td>" + item1.total + "</td><br>"
 
             textHtml1 += "</tr>"
-            // textHtml1 += "</table>"
+            textHtml1 += "</table>"
           });
 
           textHtml1 += "</table>"
@@ -146,53 +194,6 @@
         }
       });
     }
-  </script>
-
-  <script type="text/javascript">
-
-    $(document).ready(function() {
-      $("#search").keypress(function() {
-
-        // let number = $('#number').val()
-        let name = $("#search").val()
-        // data["page"] = page;
-
-        // เตรียมข้อมูลไว้แปลงเป็นJSON
-        let obj = {
-          //customer_id: customerId,
-          name: name,
-          type: "search-input"
-        }
-        // แปลงเป็นstring
-        var json = JSON.stringify(obj);
-        $.ajax({
-          type: 'POST',
-          url: 'searchd1.php',
-          dataType: 'json',
-          data: {
-            "json": json
-            // name: $("#search").val(),
-          },
-          success: function(data) {
-            // alert(data);
-            // console.log(data);
-            var textHtml = ""
-            data.forEach((item, index) => {
-
-              textHtml += "<tr>"
-
-              textHtml += "<td>" + item.invoice_id + "</td><td>" + item.company_id + "</td><td>" + item.company_format + "</td><td>" + item.invoice_number + "</td><td>" + item.name + "</td><td>" + item.organization + "</td><td>" + item.address + "</td><td>" + item.email + "</td><td>" + item.create_dt + "</td> <td><button id='btn' name='btn' onclick=myFunction1(" + item.invoice_id + ")> + </button></td>"
-
-              textHtml += "</tr>"
-              textHtml += "<tr id='bodyResult" + item.invoice_id + "'></tr><br>"
-
-            });
-            document.getElementById("output").innerHTML = textHtml
-            // createPagination(res.currentPage, res.page);
-          }
-        });
-      })
-    });
   </script>
 
 
