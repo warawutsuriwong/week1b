@@ -47,7 +47,7 @@ if ($typeQuery == 'search-input'){
      FROM invoice WHERE Name LIKE '%" . $sea . "%' OR email LIKE '%" . $sea . "%' OR create_dt LIKE '%" . $sea . "%' 
      OR address LIKE '%" . $sea . "%' OR organization LIKE '%" . $sea . "%' OR invoice_number LIKE '%" . $sea . "%'
      OR company_format LIKE '%" . $sea . "%' OR company_id LIKE '%" . $sea . "%' OR invoice_id LIKE '%" . $sea . "%'
-     ORDER BY invoice_id ASC LIMIT 0,20;
+     ORDER BY invoice_id ASC LIMIT 0,10;
     ");
 
 // $check = $stmt->execute();

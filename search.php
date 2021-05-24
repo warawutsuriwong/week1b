@@ -56,7 +56,7 @@
         </tr>
       </thead>
       <div>
-      <!-- เรียกข้อมูลหลักมาแสดง -->
+        <!-- เรียกข้อมูลหลักมาแสดง -->
         <tbody id="output"></tbody>
         </tbody>
       </div>
@@ -97,7 +97,6 @@
   <!-- เมื่อเริ่มหา -->
 
   <script type="text/javascript">
-
     $(document).ready(function() {
       $("#search").keypress(function() {
 
@@ -130,7 +129,7 @@
               textHtml += "<td>" + item.invoice_id + "</td><td>" + item.company_id + "</td><td>" + item.company_format + "</td><td>" + item.invoice_number + "</td><td>" + item.name + "</td><td>" + item.organization + "</td><td>" + item.address + "</td><td>" + item.email + "</td><td>" + item.create_dt + "</td> <td><button id='btn' name='btn' onclick=myFunction1(" + item.invoice_id + ")> + </button></td>"
 
               textHtml += "</tr>"
-              textHtml += "<tr id='bodyResult" + item.invoice_id + "'></tr><br>"
+              textHtml += "<br><tr id='bodyResult" + item.invoice_id + "'></tr><br>"
 
             });
             document.getElementById("output").innerHTML = textHtml
@@ -141,7 +140,7 @@
     });
   </script>
 
-<!-- เมื่อกด +  -->
+  <!-- เมื่อกด +  -->
   <script>
     function myFunction1(invoiceId) {
       // alert("Hello! I am an alert box!");
@@ -175,20 +174,22 @@
           <td> total </td>
           </tr><br>`;
           // textHtml1 += "</table>"
-          textHtml1 = "<br>"
+          // textHtml1 = " "
 
           data.forEach((item1) => {
+            textHtml1 = " "
             textHtml1 += "<table>"
+            // textHtml1 = " "
             textHtml1 += "<tr>"
 
             textHtml1 += "<td>" + item1.invoice_id + "</td><td>" + item1.name + "</td><td>" + item1.item_id + "</td><td>" + item1.company_id + "</td><td>" + item1.description + "</td><td>" + item1.price + "</td><td>" + item1.total + "</td><br>"
 
             textHtml1 += "</tr>"
-            textHtml1 += "</table>"
+            textHtml1 += "</table><br>"
           });
 
           textHtml1 += "</table>"
-
+          // <br>
           $("#bodyResult" + invoiceId).html(textHtml1);
           //document.getElementById("more-table").innerHTML = textHtml1
         }
