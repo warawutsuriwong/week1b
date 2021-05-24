@@ -172,17 +172,17 @@
           <td> description </td>
           <td> price </td>
           <td> total </td>
-          </tr><br>`;
+          </tr>`;
           // textHtml1 += "</table>"
           // textHtml1 = " "
 
           data.forEach((item1) => {
-            textHtml1 = " "
+            // textHtml1 = " "
             textHtml1 += "<table>"
             // textHtml1 = " "
             textHtml1 += "<tr>"
 
-            textHtml1 += "<td>" + item1.invoice_id + "</td><td>" + item1.name + "</td><td>" + item1.item_id + "</td><td>" + item1.company_id + "</td><td>" + item1.description + "</td><td>" + item1.price + "</td><td>" + item1.total + "</td><br>"
+            textHtml1 += "<br><td>" + item1.invoice_id + "</td><td>" + item1.name + "</td><td>" + item1.item_id + "</td><td>" + item1.company_id + "</td><td>" + item1.description + "</td><td>" + item1.price + "</td><td>" + item1.total + "</td><td>...</td><br>"
 
             textHtml1 += "</tr>"
             textHtml1 += "</table><br>"
