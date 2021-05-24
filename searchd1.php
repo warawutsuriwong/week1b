@@ -3,9 +3,11 @@
 $objJSON = json_decode($_POST["json"]);
 
 $typeQuery = $objJSON->{'type'};
+// $page = $input["page"];
 
 $sea = "";
 $id = null;
+// เตรียมค่ามาใส่ตัวแปร
 if ($typeQuery == 'search-input') {
     $sea = $objJSON->{'name'};
 } else if ($typeQuery == 'more-button') {
@@ -29,7 +31,7 @@ if ($typeQuery == 'search-input') {
 
 
 
-
+// เชื่อมต่อDB
 $servernameDB = "localhost";
 $usernameDB = "root";
 $passwordDB = "";
@@ -47,13 +49,23 @@ try {
     echo "Connected failed: " . $e->getMessage();
 }
 
+
+
+// $rpp = 10; // limit
+// $startPage = ( $page - 1 ) * $rpp; 
+
+// $ttp = ceil($ttt/$rpp);
+
+
+
+// เงื่อนไขเวลาหาข้อมูลมาแล้วดึงข้อมูลมา
 if ($typeQuery == 'search-input'){
     $stmt = $conn->prepare("
         SELECT invoice_id, company_id, company_format, invoice_number, name, organization, address, email, create_dt 
      FROM invoice WHERE Name LIKE '%" . $sea . "%' OR email LIKE '%" . $sea . "%' OR create_dt LIKE '%" . $sea . "%' 
      OR address LIKE '%" . $sea . "%' OR organization LIKE '%" . $sea . "%' OR invoice_number LIKE '%" . $sea . "%'
      OR company_format LIKE '%" . $sea . "%' OR company_id LIKE '%" . $sea . "%' OR invoice_id LIKE '%" . $sea . "%'
-     ORDER BY invoice_id ASC LIMIT 0,10;
+     ORDER BY invoice_id ASC LIMIT 0,20;
     ");
 
 // $check = $stmt->execute();
@@ -61,6 +73,8 @@ $stmt->execute();
 
 $dd = $stmt->fetchAll(PDO::FETCH_ASSOC);
 exit(json_encode($dd));
+
+// เงื่อนไขเวลาคลิ๊กแล้วไปดึงข้อมูลมา
 } else if ($typeQuery == 'more-button') {
     $stmt1 = $conn->prepare("
         SELECT invoice_item.invoice_id,invoice.name,invoice_item.item_id,invoice_item.company_id,
@@ -71,13 +85,7 @@ WHERE invoice_item.invoice_id = ".$id."
 LIMIT 0,10;
     ");
 $stmt1->execute();
-
-
-
 $ss = $stmt1->fetchAll(PDO::FETCH_ASSOC);
-
-
-
 exit(json_encode($ss));
 }
 

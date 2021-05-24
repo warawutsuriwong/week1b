@@ -59,15 +59,14 @@
         <tbody id="output"></tbody>
         </tbody>
       </div>
-      <div>
+      
+    </table>
+<div>
         <br>
         <tbody id="more-table">
-        <!-- <tbody id="textHtml1"> -->
         </tbody>
       </div>
-    </table>
 
-    <!-- <div id="page-selection"></div> -->
 
     <!-- ทำปุ่มกดหน้า -->
     <nav aria-label="Page navigation example">
@@ -89,10 +88,7 @@
         </li>
       </ul>
     </nav>
-
   </div>
-
-
   <!-- เมื่อเริ่มหา -->
   <script>
     function myFunction1(invoiceId) {
@@ -113,49 +109,47 @@
           // name: $("#search").val(),
         },
         success: function(data) {
-          console.log(data);
+
+
           var textHtml1 = ""
-          textHtml1 += "<table>"
-          textHtml1 +=
-            `<tr>
-          <td> invoice_id </td>
-          <td> name </td>
-          <td> item_id </td>
-          <td> company_id </td>
-          <td> description </td>
-          <td> price </td>
-          <td> total </td>
-          </tr><br>`;
-          // textHtml1 += "</table>"
-          textHtml1 = "<br>"
-
+          textHtml1 = "<table>"
+          textHtml1 += 
+          `<tr>
+            <th> invoice_id </th>
+            <th> name </th>
+            <th> item_id </th>
+            <th> company_id </th>
+            <th> description </th>
+            <th> price </th>
+            <th> total </th>
+            </tr>
+          `;
           data.forEach((item1) => {
-            // textHtml1 += "<table>"
-            textHtml1 += "<tr>"
 
-            textHtml1 += "<td>" + item1.invoice_id + "</td><td>" + item1.name + "</td><td>" + item1.item_id + "</td><td>" + item1.company_id + "</td><td>" + item1.description + "</td><td>" + item1.price + "</td><td>" + item1.total + "</td><br>"
+            textHtml1 += "<tr>";
 
-            textHtml1 += "</tr>"
-            // textHtml1 += "</table>"
+            textHtml1 += "<td>" + item1.invoice_id + "</td><td>" + item1.name + "</td><td>" + item1.item_id + "</td><td>" + item1.company_id + "</td><td>" + item1.description + "</td><td>" + item1.price + "</td><td>" + item1.total + "</td>";
+
+            textHtml1 += "</tr>";
+
           });
 
-          textHtml1 += "</table>"
+          textHtml1 += "</table>";
 
           $("#bodyResult" + invoiceId).html(textHtml1);
-          //document.getElementById("more-table").innerHTML = textHtml1
+          //document.getElementById("bodyResult" + invoiceId).innerHTML = textHtml1
         }
       });
     }
   </script>
 
   <script type="text/javascript">
-
     $(document).ready(function() {
+
       $("#search").keypress(function() {
 
         // let number = $('#number').val()
         let name = $("#search").val()
-        // data["page"] = page;
 
         // เตรียมข้อมูลไว้แปลงเป็นJSON
         let obj = {
@@ -176,6 +170,7 @@
           success: function(data) {
             // alert(data);
             // console.log(data);
+
             var textHtml = ""
             data.forEach((item, index) => {
 
@@ -184,17 +179,15 @@
               textHtml += "<td>" + item.invoice_id + "</td><td>" + item.company_id + "</td><td>" + item.company_format + "</td><td>" + item.invoice_number + "</td><td>" + item.name + "</td><td>" + item.organization + "</td><td>" + item.address + "</td><td>" + item.email + "</td><td>" + item.create_dt + "</td> <td><button id='btn' name='btn' onclick=myFunction1(" + item.invoice_id + ")> + </button></td>"
 
               textHtml += "</tr>"
-              textHtml += "<tr id='bodyResult" + item.invoice_id + "'></tr><br>"
+              textHtml += "<tr id='bodyResult"+item.invoice_id+"'></tr>"
 
             });
             document.getElementById("output").innerHTML = textHtml
-            // createPagination(res.currentPage, res.page);
           }
         });
       })
     });
   </script>
-
 
 </body>
 
